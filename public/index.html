@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Multi-Tier Node App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f7fa;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1,
+        h2 {
+            color: #333;
+        }
+
+        #item-list {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 20px 0;
+        }
+
+        #item-list li {
+            background: #fff;
+            margin-bottom: 10px;
+            padding: 12px 16px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        input {
+            padding: 10px;
+            margin: 5px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            width: 200px;
+            transition: border 0.3s;
+        }
+
+        input:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+
+        button {
+            padding: 10px 16px;
+            margin: 5px;
+            border: none;
+            border-radius: 6px;
+            background: #007bff;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background: #0056b3;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background: #fff;
+            padding: 20px 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Items</h1>
+        <ul id="item-list"></ul>
+
+        <h2>Add Item</h2>
+        <input id="name" placeholder="Name">
+        <input id="desc" placeholder="Description">
+        <button onclick="addItem()">Add</button>
+    </div>
+
+    <script>
+        async function loadItems() {
+            const res = await fetch('/api/items');
+            const items = await res.json();
+            const list = document.getElementById('item-list');
+            list.innerHTML = "";
+            items.forEach(item => {
+                const li = document.createElement('li');
+                li.textContent = `${item.id}: ${item.name} - ${item.description}`;
+                list.appendChild(li);
+            });
+        }
+
+        async function addItem() {
+            const name = document.getElementById('name').value;
+            const desc = document.getElementById('desc').value;
+            await fetch('/api/items', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name, description: desc })
+            });
+            loadItems();
+        }
+
+        loadItems();
+    </script>
+</body>
+
+</html>
