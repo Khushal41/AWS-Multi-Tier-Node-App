@@ -198,7 +198,3 @@ mysql -h <RDS-ENDPOINT> -u <DB-USER> -p
 This is a **production-ready, step-by-step AWS Multi-Tier Web App deployment guide**, including Bastion setup, ALB, RDS, auto-scaling, and optional SSM connection.
 
 ---
-
-If you want, I can also **create a single CloudFormation template** that provisions **VPC, Subnets, IGW, NAT, Bastion, App EC2, ALB, Target Groups, RDS, and Security Groups** all at once—so it becomes fully automated.
-
-Do you want me to do that?
